@@ -15,10 +15,8 @@ emotions = to_categorical(data['emotion'])
 x_train, x_test, y_train, y_test = train_test_split(pixels, emotions, test_size=0.2, random_state=42)
 
 def FER_Model(input_shape=(48, 48, 1)):
-    # first input model
     visible = Input(shape=input_shape, name='input')
     num_classes = 7
-    # the 1-st block
     conv1_1 = Conv2D(64, kernel_size=3, activation='relu', padding='same', name='conv1_1')(visible)
     conv1_1 = BatchNormalization()(conv1_1)
     conv1_2 = Conv2D(64, kernel_size=3, activation='relu', padding='same', name='conv1_2')(conv1_1)
@@ -53,8 +51,6 @@ def FER_Model(input_shape=(48, 48, 1)):
     conv4_4 = BatchNormalization()(conv4_4)
     pool4_1 = MaxPooling2D(pool_size=(2, 2), name='pool4_1')(conv4_4)
     drop4_1 = Dropout(0.3, name='drop4_1')(pool4_1)
-
-    # the 5-th block
     conv5_1 = Conv2D(512, kernel_size=3, activation='relu', padding='same', name='conv5_1')(drop4_1)
     conv5_1 = BatchNormalization()(conv5_1)
     conv5_2 = Conv2D(512, kernel_size=3, activation='relu', padding='same', name='conv5_2')(conv5_1)
@@ -68,7 +64,6 @@ def FER_Model(input_shape=(48, 48, 1)):
     flatten = Flatten(name='flatten')(drop5_1)
     ouput = Dense(num_classes, activation='softmax', name='output')(flatten)  # create model
     model = Model(inputs=visible, outputs=ouput)
-    # summary layers
     print(model.summary())
 
     return model
