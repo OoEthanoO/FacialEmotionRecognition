@@ -10,7 +10,7 @@ import numpy as np
 
 app = Flask(__name__)
 CORS(app)
-model = load_model('Emoti0.1.h5')
+model = load_model('Emoti0.2.h5')
 
 @app.route('/video_feed', methods=['GET', 'POST'])
 def video_feed():
